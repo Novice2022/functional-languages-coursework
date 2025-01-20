@@ -1,0 +1,11 @@
+services:
+  elixir:
+    build:
+      context: docker
+      dockerfile: elixir.docker
+    volumes:
+      - ./app:/app
+  erlang:
+    build:
+      context: docker
+      dockerfile: erlang.docker

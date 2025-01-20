@@ -1,0 +1,3 @@
+FROM elixir:latest
+ENTRYPOINT ["tail"]
+CMD ["-f","/dev/null"]
