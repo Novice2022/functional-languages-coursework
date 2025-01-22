@@ -1,11 +1,21 @@
 defmodule App do
-  alias App.Lib.Structs.Field
+  alias App.Lib.Structs
   alias App.Lib.Modules.GameIo
 
   def run do
-    field = Field.new()
+    GameIo.welcome()
+    nicknames = GameIo.get_nicknames()
 
-    IO.puts("Field created")
-    GameIo.print_space(field.space)
+    session = Structs.Session.new(
+      Structs.Player.new(
+        nicknames.left,
+        :active
+      ),
+      Structs.Player.new(
+        nicknames.right
+      )
+    )
+
+    Structs.Session.run(session)
   end
 end

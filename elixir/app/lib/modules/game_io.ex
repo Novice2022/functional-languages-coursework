@@ -1,17 +1,62 @@
 defmodule App.Lib.Modules.GameIo do
-  def print_space(space) do
-    IO.puts("   ║ а б в г д е ж з и к")
-    IO.puts("═══╬════════════════════")
-    for row <- 1..10 do
-      space_row = for column <- 1..10 do
-        elem(elem(space, row), column)
-      end
+  def clear_console do
+    System.shell("clear", into: IO.stream())
+  end
 
-      if row < 10 do
-        IO.puts("#{row}  ║ #{Enum.join(space_row, " ")}")
-      else
-        IO.puts("10 ║ #{Enum.join(space_row, " ")}")
-      end
+  def welcome do
+    clear_console()
+    IO.puts("Добро пожаловать в игру Морской Бой!\n")
+  end
+
+  def get_nicknames do
+    users = String.trim(
+      IO.gets(
+        "Введите никнеймы через \", \" для первого и второго игрока соответственно:\n > "
+      )
+    )
+
+    if (
+      String.contains?(users, ", ") and
+      !String.starts_with?(users, ", ") and
+      !String.ends_with?(users, ", \n")
+     ) do
+      splited = String.split(users, ", ")
+
+      %{
+        left: hd(splited),
+        right: hd(tl(splited))
+      }
+    else
+      clear_console()
+      get_nicknames()
+    end
+  end
+
+  def request_field(nickname) do
+    alias App.Lib.Structs.Field
+
+    clear_console()
+
+    IO.puts(
+      """
+      Создание поля игрока [#{nickname}]
+        * \".\" - новое поле
+        * остальное - сохранить
+      
+      """
+    )
+    
+    field = Field.new()
+    
+    Field.print_space(field.space)
+    IO.puts("")
+
+    input = IO.gets(" > ")
+
+    if input == ".\n" do
+      request_field(nickname)
+    else
+      field
     end
   end
 end
