@@ -1,18 +1,11 @@
 defmodule App do
-  @moduledoc """
-  Documentation for `App`.
-  """
+  alias App.Lib.Structs.Field
+  alias App.Lib.Modules.GameIo
 
-  @doc """
-  Hello world.
+  def run do
+    field = Field.new()
 
-  ## Examples
-
-      iex> App.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    IO.puts("Field created")
+    GameIo.print_space(field.space)
   end
 end
