@@ -7,8 +7,7 @@ defmodule App.Lib.Structs.Field do
   ]
   defstruct [
     :space,
-    :ships,
-    hp_remains: 30
+    :ships
   ]
 
   def has_obstacles(space, ship) do

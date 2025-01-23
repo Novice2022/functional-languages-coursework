@@ -59,4 +59,29 @@ defmodule App.Lib.Modules.GameIo do
       field
     end
   end
+
+  def request_shot_coordinates do
+    input = String.trim_trailing(
+      IO.gets(
+        "\nВыберите координаты для выстрела (номер строки и столбца через пробел):\n > "
+      ),
+      "\n"
+    )
+
+    if Regex.match?(~r/^(1[0]|[1-9])\s[а-к]+$/, input) do
+      {
+        String.to_integer(hd(String.split(input))),
+        (String.split(input)
+          |> List.last()
+          |> String.to_charlist()
+          |> List.first()) - 1071
+      }
+    else
+      request_shot_coordinates()
+    end
+  end
+
+  def announce_the_winner(nickname) do
+    IO.puts("\nУра! Победил игрок \"[#{nickname}\"!")
+  end
 end
